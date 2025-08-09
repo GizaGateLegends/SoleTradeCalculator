@@ -1,126 +1,197 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="govuk-template">
 <head>
-<meta charset="utf-8">
-<title>Self-Employed vs Limited Company - 2025/26 (England/Wales)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  :root { --gap:14px; --pad:16px; --radius:10px; --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
-  *{ box-sizing:border-box }
-  body{ font-family:var(--font); margin:0; padding:24px; background:#0f172a; color:#e5e7eb }
-  h1{ font-size:22px; margin:0 0 8px }
-  .hint{ margin:0 0 18px; color:#a3a3a3; font-size:13px }
-  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--gap) }
-  .card{ background:#111827; border:1px solid #1f2937; border-radius:var(--radius); padding:var(--pad) }
-  .inputs{ display:grid; grid-template-columns:1fr 1fr; gap:var(--gap) }
-  label{ display:block; font-size:13px; color:#c7cbd1; margin-bottom:6px }
-  input,select,button{ font:inherit }
-  input,select{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid #374151; background:#0b1220; color:#f3f4f6 }
-  input[type="checkbox"]{ width:auto }
-  .kpi{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--gap); margin-top:10px }
-  .kpi > div{ background:#0b1220; border:1px solid #1f2937; border-radius:10px; padding:12px; text-align:center }
-  .kpi h3{ margin:0 0 6px; font-size:13px; color:#9ca3af; font-weight:500 }
-  .kpi .val{ font-size:20px; font-weight:700 }
-  table{ width:100%; border-collapse:collapse }
-  th,td{ padding:10px 8px; border-bottom:1px solid #1f2937; font-size:13px }
-  th{ text-align:left; color:#9ca3af; font-weight:600 }
-  tfoot td{ font-weight:700 }
-  .danger{ color:#fca5a5 }
-  .good{ color:#86efac }
-  .tiny{ font-size:12px; color:#9ca3af }
-  .btn{ margin-top:10px; padding:10px 14px; border-radius:8px; border:1px solid #374151; background:#0b1220; color:#e5e7eb; cursor:pointer }
-  .note{ margin-top:8px; font-size:12px; color:#9ca3af }
-  @media (max-width: 960px){
-    .grid{ grid-template-columns:1fr }
-    .inputs{ grid-template-columns:1fr }
-    .kpi{ grid-template-columns:1fr }
-  }
-</style>
+  <meta charset="utf-8">
+  <title>Self employed vs limited company — 2025/26 (England and Wales)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- GOV.UK Frontend (CSS + JS) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.5.0/govuk/all.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.5.0/govuk/all.min.js"></script>
+
+  <style>
+    /* Small helpers to sit nicely within GOV.UK look */
+    .kpi-box {
+      border: 1px solid #b1b4b6;
+      border-radius: 4px;
+      padding: 16px;
+      background: #f3f2f1;
+      text-align: center;
+    }
+    .kpi-value {
+      font-weight: 700;
+      font-size: 28px;
+      margin-top: 4px;
+    }
+    .tax-figure {
+      cursor: pointer;
+    }
+    .tax-figure:hover {
+      text-decoration: underline;
+    }
+    dialog.govuk-dialog {
+      border: 0;
+      border-radius: 6px;
+      width: min(560px, 92vw);
+      padding: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .govuk-dialog__content {
+      padding: 24px;
+      background: #fff;
+    }
+    .govuk-dialog__header {
+      padding: 16px 24px 0 24px;
+      background: #fff;
+    }
+    .govuk-dialog__footer {
+      padding: 0 24px 24px 24px;
+      background: #fff;
+    }
+    .align-right { text-align: right; }
+    .mono { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body>
-  <h1>Self-Employed vs Limited Company - 2025/26 (England/Wales)</h1>
-  <p class="hint">Assumptions: PA £12,570 with taper to £0 between £100k and £125,140. Income tax 20/40/45. Dividend allowance £500. Dividend rates 8.75/33.75/39.35. Self-employed NI Class 4 at 6% and 2%. Employee NI 8% then 2%. Employer NI 13.8% above secondary threshold. Employment Allowance £5,000. Planning tool only.</p>
+<body class="govuk-template__body">
+<script>
+  // Initialise GOV.UK Frontend when JS loads
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.GOVUKFrontend) window.GOVUKFrontend.initAll();
+  });
+</script>
 
-  <div class="grid">
-    <div class="card">
-      <h2 style="margin-top:0">Inputs</h2>
-      <div class="inputs">
-        <div>
-          <label for="profits">Business profits (before drawings)</label>
-          <input id="profits" type="number" min="0" step="100" value="80000">
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper" id="main-content" role="main">
+    <h1 class="govuk-heading-l">Self employed vs limited company for 2025 to 2026 (England and Wales)</h1>
+    <p class="govuk-body">
+      Assumptions: personal allowance £12,570 with taper between £100,000 and £125,140. Income tax 20% / 40% / 45%.
+      Dividend allowance £500. Dividend tax 8.75% / 33.75% / 39.35. Class 4 NI 6% then 2%. Employee NI 8% then 2%.
+      Employer NI 13.8% above the secondary threshold. Employment Allowance £5,000. Planning tool only.
+    </p>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m">Inputs</h2>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="profits">Business profits before drawings</label>
+          <input class="govuk-input govuk-input--width-10" id="profits" type="number" step="100" min="0" value="80000">
         </div>
-        <div>
-          <label for="otherEarned">Other earned income (salary, rent, interest)</label>
-          <input id="otherEarned" type="number" min="0" step="100" value="0">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="otherEarned">Other earned income (salary, rent, interest)</label>
+          <input class="govuk-input govuk-input--width-10" id="otherEarned" type="number" step="100" min="0" value="0">
         </div>
-        <div>
-          <label for="otherDivs">Other dividends (not from your company)</label>
-          <input id="otherDivs" type="number" min="0" step="100" value="0">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="otherDivs">Other dividends (not from your company)</label>
+          <input class="govuk-input govuk-input--width-10" id="otherDivs" type="number" step="100" min="0" value="0">
         </div>
-        <div>
-          <label for="assocCos">Associated companies (for CT limits)</label>
-          <input id="assocCos" type="number" min="0" step="1" value="0">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="assocCos">Associated companies (for corporation tax limits)</label>
+          <input class="govuk-input govuk-input--width-5" id="assocCos" type="number" min="0" step="1" value="0">
         </div>
-        <div>
-          <label for="months">Accounting period length (months)</label>
-          <input id="months" type="number" min="1" max="12" step="1" value="12">
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="months">Accounting period length (months)</label>
+          <input class="govuk-input govuk-input--width-5" id="months" type="number" min="1" max="12" step="1" value="12">
         </div>
-        <div>
-          <input id="ea" type="checkbox" checked>
-          <label for="ea">Employment Allowance available</label>
+
+        <div class="govuk-form-group">
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="ea" type="checkbox" checked>
+              <label class="govuk-label govuk-checkboxes__label" for="ea">
+                Employment Allowance available
+              </label>
+            </div>
+          </div>
+          <p class="govuk-hint">Salary policy for the company case: with Employment Allowance £12,570; without £9,100 to avoid employer NI.</p>
         </div>
       </div>
-      <button id="recalcBtn" class="btn">Recalculate</button>
-      <div class="note">Ltd Co salary policy: EA on -> salary £12,570. EA off -> salary £9,100 to avoid employer NI.</div>
-    </div>
 
-    <div class="card">
-      <h2 style="margin-top:0">Headline comparison</h2>
-      <div class="kpi">
-        <div>
-          <h3>Total tax - Self-employed</h3>
-          <div class="val" id="seTax">£0</div>
-        </div>
-        <div>
-          <h3>Total tax - Ltd Co</h3>
-          <div class="val" id="coTax">£0</div>
-        </div>
-        <div>
-          <h3>Take-home difference</h3>
-          <div class="val" id="diff">£0</div>
-          <div class="tiny" id="whichBetter"></div>
+      <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m">Headline comparison</h2>
+        <div class="govuk-grid-row" style="row-gap:16px">
+          <div class="govuk-grid-column-one-third">
+            <div class="kpi-box">
+              <div class="govuk-body-s">Total tax — self employed</div>
+              <div id="seTax" class="kpi-value mono tax-figure" data-kind="se-total">£0</div>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <div class="kpi-box">
+              <div class="govuk-body-s">Total tax — limited company</div>
+              <div id="coTax" class="kpi-value mono tax-figure" data-kind="co-total">£0</div>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <div class="kpi-box">
+              <div class="govuk-body-s">Take home difference</div>
+              <div id="diff" class="kpi-value mono">£0</div>
+              <div id="whichBetter" class="govuk-hint" style="margin:0"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="grid" style="margin-top:var(--gap);">
-    <div class="card">
-      <h3 style="margin-top:0">Self-employed breakdown</h3>
-      <table>
-        <tbody id="seRows"></tbody>
-        <tfoot>
-          <tr><td><strong>Total tax</strong></td><td class="danger" id="seTotalTax">£0</td></tr>
-          <tr><td><strong>Take-home</strong></td><td class="good" id="seTakeHome">£0</td></tr>
-        </tfoot>
-      </table>
-    </div>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <div class="card">
-      <h3 style="margin-top:0">Limited company breakdown</h3>
-      <table>
-        <tbody id="coRows"></tbody>
-        <tfoot>
-          <tr><td><strong>Total tax</strong></td><td class="danger" id="coTotalTax">£0</td></tr>
-          <tr><td><strong>Take-home</strong></td><td class="good" id="coTakeHome">£0</td></tr>
-        </tfoot>
-      </table>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m">Self employed breakdown</h3>
+        <dl class="govuk-summary-list" id="seSummary"></dl>
+        <div class="govuk-inset-text">
+          <span>Total tax:</span> <strong id="seTotalTax" class="mono tax-figure" data-kind="se-total">£0</strong><br>
+          <span>Take home:</span> <strong id="seTakeHome" class="mono">£0</strong>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m">Limited company breakdown</h3>
+        <dl class="govuk-summary-list" id="coSummary"></dl>
+        <div class="govuk-inset-text">
+          <span>Total tax:</span> <strong id="coTotalTax" class="mono tax-figure" data-kind="co-total">£0</strong><br>
+          <span>Take home:</span> <strong id="coTakeHome" class="mono">£0</strong>
+        </div>
+      </div>
     </div>
+  </main>
+</div>
+
+<!-- Breakdown dialog -->
+<dialog id="breakdownDialog" class="govuk-dialog">
+  <div class="govuk-dialog__header">
+    <h2 id="dialogTitle" class="govuk-heading-m" style="margin-bottom:8px">Tax breakdown</h2>
   </div>
+  <div class="govuk-dialog__content">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Item</th>
+          <th scope="col" class="govuk-table__header align-right">Amount</th>
+        </tr>
+      </thead>
+      <tbody id="dialogBody" class="govuk-table__body"></tbody>
+      <tfoot class="govuk-table__foot">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Total</th>
+          <td id="dialogTotal" class="govuk-table__cell align-right mono">£0</td>
+        </tr>
+      </tfoot>
+    </table>
+    <p class="govuk-hint" id="dialogNote"></p>
+  </div>
+  <div class="govuk-dialog__footer">
+    <button class="govuk-button" data-module="govuk-button" id="dialogCloseBtn">Close</button>
+  </div>
+</dialog>
 
 <script>
 (function(){
-  // 2025-26 constants
+  // 2025 to 2026 constants
   const PA = 12570;
   const PA_TAPER_START = 100000;
   const PA_TAPER_END = 125140;
@@ -137,30 +208,25 @@
   const DIV_HIGHER = 0.3375;
   const DIV_ADDITIONAL = 0.3935;
 
-  // Self-employed NI Class 4
   const C4_LPL = 12570;
   const C4_UPL = 50270;
   const C4_MAIN = 0.06;
   const C4_UPPER = 0.02;
 
-  // Employee NI
   const EMP_PRIMARY_PT = 12570;
   const EMP_UPPER_EARN = 50270;
   const EMP_NI_MAIN = 0.08;
   const EMP_NI_UPPER = 0.02;
 
-  // Employer NI
   const ER_SECONDARY_ST = 9100;
   const ER_NI = 0.138;
   const EMPLOYMENT_ALLOWANCE = 5000;
 
-  // Corporation tax
   const CT_SMALL = 0.19;
   const CT_MAIN = 0.25;
   const CT_LOWER_LIMIT_ANNUAL = 50000;
   const CT_UPPER_LIMIT_ANNUAL = 250000;
 
-  // Helpers
   function fmtGBP(n){ return "£" + Number(n).toLocaleString("en-GB",{maximumFractionDigits:0}); }
   function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
 
@@ -183,12 +249,10 @@
     if (totalDivs <= 0) return 0;
     let remaining = totalDivs;
 
-    // apply allowance
     const usedAllow = Math.min(DIV_ALLOWANCE, remaining);
     remaining -= usedAllow;
     if (remaining <= 0) return 0;
 
-    // bands left after NSND
     const nsndAfterPA = Math.max(0, nsndTaxableAfterPA);
     const basicLeft = Math.max(0, BASIC_BAND - nsndAfterPA);
 
@@ -224,28 +288,35 @@
   }
 
   function corporationTax(profits, assocCount, months){
-    const companies = Math.max(1, 1 + Number(assocCount||0)); // company + associated
+    const companies = Math.max(1, 1 + Number(assocCount||0)); // company itself + associated
     const period = clamp(Number(months||12), 1, 12);
     const lower = CT_LOWER_LIMIT_ANNUAL / companies * (period/12);
     const upper = CT_UPPER_LIMIT_ANNUAL / companies * (period/12);
 
-    if (profits <= 0) return { ct:0, rate:0, lower, upper };
-    if (profits <= lower) return { ct: profits*CT_SMALL, rate: CT_SMALL, lower, upper };
-    if (profits >= upper) return { ct: profits*CT_MAIN, rate: CT_MAIN, lower, upper };
+    if (profits <= 0) return { ct:0, lower, upper };
+    if (profits <= lower) return { ct: profits*CT_SMALL, lower, upper };
+    if (profits >= upper) return { ct: profits*CT_MAIN, lower, upper };
 
-    // marginal relief
     const MR_FRACTION = 3/200;
-    const augmented = profits; // approximation
+    const augmented = profits;
     const mainCharge = profits * CT_MAIN;
     const MR = (upper - profits) * MR_FRACTION * (profits / augmented);
     const ct = mainCharge - MR;
-    return { ct, rate: ct/profits, lower, upper };
+    return { ct, lower, upper };
   }
 
-  function row(label, val){
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${label}</td><td style="text-align:right">${fmtGBP(Math.round(val))}</td>`;
-    return tr;
+  // state used for dialog rendering
+  const state = {
+    se: {}, co: {}
+  };
+
+  function renderSummaryList(container, rows){
+    container.innerHTML = rows.map(r => `
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">${r.k}</dt>
+        <dd class="govuk-summary-list__value align-right mono ${r.click ? 'tax-figure' : ''}" ${r.click ? `data-kind="${r.click}"` : ''}>${fmtGBP(Math.round(r.v))}</dd>
+      </div>
+    `).join("");
   }
 
   function calc(){
@@ -256,7 +327,7 @@
     const months = Number(document.getElementById("months").value || 12);
     const eaOn = document.getElementById("ea").checked;
 
-    // Self-employed
+    // self employed
     const seANI = profits + otherEarned + otherDivs;
     const sePA = taperedPA(seANI);
     const seNSND = profits + otherEarned;
@@ -267,7 +338,7 @@
     const seTotalTax = seIT + seDivTax + seC4;
     const seTakeHome = (profits + otherEarned + otherDivs) - seTotalTax;
 
-    // Limited company
+    // limited company
     const salary = eaOn ? 12570 : 9100;
     const coANIbase = salary + otherEarned + otherDivs;
     const coPA = taperedPA(coANIbase);
@@ -279,7 +350,7 @@
     const erNI = Math.max(0, erNIgross - (eaOn ? eaCredit : 0));
 
     const ctProfit = Math.max(0, profits - salary - erNI);
-    const { ct, rate: ctEffRate, lower: ctLower, upper: ctUpper } = corporationTax(ctProfit, assocCos, months);
+    const { ct, lower: ctLower, upper: ctUpper } = corporationTax(ctProfit, assocCos, months);
     const postCT = Math.max(0, ctProfit - ct);
 
     const coDivsTotal = postCT + otherDivs;
@@ -290,51 +361,153 @@
     const coTotalTax = ct + paye + empNI + erNI + coDivTax;
     const coTakeHome = salary - paye - empNI + postCT - coDivTax + otherEarned + otherDivs;
 
-    // Headline
+    // headline
     document.getElementById("seTax").textContent = fmtGBP(Math.round(seTotalTax));
     document.getElementById("coTax").textContent = fmtGBP(Math.round(coTotalTax));
     const diff = coTakeHome - seTakeHome;
     document.getElementById("diff").textContent = fmtGBP(Math.round(Math.abs(diff)));
-    document.getElementById("whichBetter").textContent = diff >= 0 ? "Ltd Co take-home higher" : "Self-employed take-home higher";
+    document.getElementById("whichBetter").textContent = diff >= 0 ? "Limited company take home is higher" : "Self employed take home is higher";
 
-    // SE table
-    const seRows = document.getElementById("seRows");
-    seRows.innerHTML = "";
-    seRows.appendChild(row("Personal allowance applied", sePA));
-    seRows.appendChild(row("Income tax on profits plus other earned", seIT));
-    seRows.appendChild(row("Dividend tax on other dividends", seDivTax));
-    seRows.appendChild(row("Class 4 NI", seC4));
+    // summary lists
+    renderSummaryList(document.getElementById("seSummary"), [
+      { k: "Personal allowance applied", v: sePA },
+      { k: "Income tax on profits and other earned", v: seIT, click: "se-it" },
+      { k: "Dividend tax on other dividends", v: seDivTax, click: "se-divtax" },
+      { k: "Class 4 National Insurance", v: seC4, click: "se-ni" }
+    ]);
     document.getElementById("seTotalTax").textContent = fmtGBP(Math.round(seTotalTax));
     document.getElementById("seTakeHome").textContent = fmtGBP(Math.round(seTakeHome));
 
-    // Ltd Co table
-    const coRows = document.getElementById("coRows");
-    coRows.innerHTML = "";
-    coRows.appendChild(row("Assumed salary", salary));
-    coRows.appendChild(row("PAYE income tax on salary", paye));
-    coRows.appendChild(row("Employee NI on salary", empNI));
-    coRows.appendChild(row("Employer NI on salary after EA", erNI));
-    coRows.appendChild(row("CT profit after salary and ER NI", ctProfit));
-    coRows.appendChild(row("Corporation tax", ct));
-    coRows.appendChild(row("Post CT profit available for dividends", postCT));
-    coRows.appendChild(row("Dividend tax including other dividends", coDivTax));
-    const limits = document.createElement("tr");
-    limits.innerHTML = `<td>CT small and main limits (period adjusted)</td><td style="text-align:right" class="tiny">Lower: ${fmtGBP(Math.round(ctLower))} | Upper: ${fmtGBP(Math.round(ctUpper))}</td>`;
-    coRows.appendChild(limits);
+    renderSummaryList(document.getElementById("coSummary"), [
+      { k: "Assumed director salary", v: salary },
+      { k: "PAYE income tax on salary", v: paye, click: "co-paye" },
+      { k: "Employee NI on salary", v: empNI, click: "co-empni" },
+      { k: "Employer NI on salary after EA", v: erNI, click: "co-erni" },
+      { k: "Corporation tax", v: ct, click: "co-ct" },
+      { k: "Post corporation tax profit available for dividends", v: postCT },
+      { k: "Dividend tax (including other dividends)", v: coDivTax, click: "co-divtax" },
+      { k: "CT limits for this period", v: 0 } // shown as note below
+    ]);
+    // Replace last value with textual note of limits
+    const rows = document.querySelectorAll("#coSummary .govuk-summary-list__row");
+    const lastRowValue = rows[rows.length - 1].querySelector(".govuk-summary-list__value");
+    lastRowValue.innerHTML = `<span class="govuk-hint">Lower: ${fmtGBP(Math.round(ctLower))} | Upper: ${fmtGBP(Math.round(ctUpper))}</span>`;
 
     document.getElementById("coTotalTax").textContent = fmtGBP(Math.round(coTotalTax));
     document.getElementById("coTakeHome").textContent = fmtGBP(Math.round(coTakeHome));
+
+    // store state for dialog
+    state.se = { seIT, seDivTax, seC4, seTotalTax };
+    state.co = { salary, paye, empNI, erNI, ct, postCT, coDivTax, coTotalTax };
   }
 
-  // Wire up
+  // dialog helpers
+  const dlg = document.getElementById("breakdownDialog");
+  const dlgTitle = document.getElementById("dialogTitle");
+  const dlgBody = document.getElementById("dialogBody");
+  const dlgTotal = document.getElementById("dialogTotal");
+  const dlgNote = document.getElementById("dialogNote");
+  document.getElementById("dialogCloseBtn").addEventListener("click", () => dlg.close());
+
+  function openBreakdown(kind){
+    dlgBody.innerHTML = "";
+    dlgNote.textContent = "";
+    let rows = [];
+    let title = "Tax breakdown";
+    let total = 0;
+
+    if (kind === "se-total"){
+      title = "Self employed — total tax";
+      rows = [
+        ["Income tax", state.se.seIT],
+        ["Dividend tax", state.se.seDivTax],
+        ["Class 4 NI", state.se.seC4]
+      ];
+      total = state.se.seTotalTax;
+      dlgNote.textContent = "Income tax uses 20% / 40% / 45% bands after personal allowance and taper. Class 4 NI is 6% to the upper profits limit, then 2%.";
+    }
+    if (kind === "co-total"){
+      title = "Limited company — total tax";
+      rows = [
+        ["PAYE on salary", state.co.paye],
+        ["Employee NI on salary", state.co.empNI],
+        ["Employer NI on salary (included for comparison)", state.co.erNI],
+        ["Corporation tax", state.co.ct],
+        ["Dividend tax", state.co.coDivTax]
+      ];
+      total = state.co.coTotalTax;
+      dlgNote.textContent = "Employer NI is included to show the full burden. Corporation tax uses small rate, main rate and marginal relief according to associated companies and the period length.";
+    }
+    if (kind === "se-it"){
+      title = "Self employed — income tax";
+      rows = [["Income tax", state.se.seIT]];
+      total = state.se.seIT;
+    }
+    if (kind === "se-divtax"){
+      title = "Self employed — dividend tax";
+      rows = [["Dividend tax", state.se.seDivTax]];
+      total = state.se.seDivTax;
+      dlgNote.textContent = "The first £500 of dividends are taxed at 0% but still use up bands.";
+    }
+    if (kind === "se-ni"){
+      title = "Self employed — Class 4 NI";
+      rows = [["Class 4 NI", state.se.seC4]];
+      total = state.se.seC4;
+    }
+    if (kind === "co-paye"){
+      title = "Limited company — PAYE on salary";
+      rows = [["PAYE (income tax on salary)", state.co.paye]];
+      total = state.co.paye;
+    }
+    if (kind === "co-empni"){
+      title = "Limited company — employee NI";
+      rows = [["Employee NI", state.co.empNI]];
+      total = state.co.empNI;
+    }
+    if (kind === "co-erni"){
+      title = "Limited company — employer NI";
+      rows = [["Employer NI (after Employment Allowance)", state.co.erNI]];
+      total = state.co.erNI;
+    }
+    if (kind === "co-ct"){
+      title = "Limited company — corporation tax";
+      rows = [["Corporation tax", state.co.ct]];
+      total = state.co.ct;
+    }
+    if (kind === "co-divtax"){
+      title = "Limited company — dividend tax";
+      rows = [["Dividend tax", state.co.coDivTax]];
+      total = state.co.coDivTax;
+      dlgNote.textContent = "The first £500 of dividends are taxed at 0% but still use up bands.";
+    }
+
+    // render rows
+    rows.forEach(([k,v])=>{
+      const tr = document.createElement("tr");
+      tr.className = "govuk-table__row";
+      tr.innerHTML = `<td class="govuk-table__cell">${k}</td><td class="govuk-table__cell align-right mono">${fmtGBP(Math.round(v))}</td>`;
+      dlgBody.appendChild(tr);
+    });
+    dlgTitle.textContent = title;
+    dlgTotal.textContent = fmtGBP(Math.round(total));
+    dlg.showModal();
+  }
+
+  // click handlers for any .tax-figure
+  document.addEventListener("click", function(e){
+    const t = e.target.closest(".tax-figure");
+    if (t && t.dataset.kind){
+      openBreakdown(t.dataset.kind);
+    }
+  });
+
+  // wire inputs and run
   ["profits","otherEarned","otherDivs","assocCos","months","ea"].forEach(id=>{
     const el = document.getElementById(id);
     el.addEventListener("input", calc);
     el.addEventListener("change", calc);
   });
-  document.getElementById("recalcBtn").addEventListener("click", calc);
   document.addEventListener("DOMContentLoaded", calc);
-  // Also run immediately in case DOMContentLoaded already fired
   calc();
 })();
 </script>
