@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UK 2025/26 Self‑Employed vs Ltd Co Tax Calculator (England/Wales)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --gap: 14px; --pad: 16px; --radius: 10px; --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+  * { box-sizing: border-box; }
+  body { font-family: var(--font); margin: 0; padding: 24px; background: #0f172a; color: #e5e7eb; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p.hint { margin: 0 0 18px; color: #a3a3a3; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .card { background: #111827; border: 1px solid #1f2937; border-radius: var(--radius); padding: var(--pad); }
+  .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  label { display: block; font-size: 13px; color: #c7cbd1; margin-bottom: 6px; }
+  input, select { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #374151; background: #0b1220; color: #f3f4f6; }
+  input[type="checkbox"] { width: auto; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .money { font-variant-numeric: tabular-nums; }
+  .kpi { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: 10px; }
+  .kpi > div { background: #0b1220; border: 1px solid #1f2937; border-radius: 10px; padding: 12px; text-align: center; }
+  .kpi h3 { margin: 0 0 6px; font-size: 13px; color: #9ca3af; font-weight: 500; }
+  .kpi .val { font-size: 20px; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 10px 8px; border-bottom: 1px solid #1f2937; font-size: 13px; }
+  th { text-align: left; color: #9ca3af; font-weight: 600; }
+  tfoot td { font-weight: 700; }
+  .accent { color: #a7f3d0; }
+  .danger { color: #fca5a5; }
+  .good { color: #86efac; }
+  .tiny { font-size: 12px; color: #9ca3af; }
+  .switch { display: flex; align-items: center; gap: 8px; }
+  .note { margin-top: 10px; font-size: 12px; color: #9ca3af; }
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: 1fr; }
+    .inputs { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; }
+    .kpi { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <h1>Self‑Employed vs Limited Company — 2025/26 (England/Wales)</h1>
+  <p class="hint">Assumptions: PA £12,570 with taper, IT 20/40/45, dividend allowance £500, dividend rates 8.75/33.75/39.35, Class 4 NI 6%/2%, employee NI 8%/2%, employer NI 13.8%, Employment Allowance £5,000. Use your own judgment before relying on results.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2 style="margin-top:0">Inputs</h2>
+      <div class="inputs">
+        <div>
+          <label for="profits">Business profits (before drawings)</label>
+          <input id="profits" type="number" min="0" step="100" value="80000">
+        </div>
+        <div>
+          <label for="otherEarned">Other earned income (salary, rent, interest)</label>
+          <input id="otherEarned" type="number" min="0" step="100" value="0">
+        </div>
+        <div>
+          <label for="otherDivs">Other dividends (not from your company)</label>
+          <input id="otherDivs" type="number" min="0" step="100" value="0">
+        </div>
+        <div>
+          <label for="assocCos">Associated companies (for CT limits)</label>
+          <input id="assocCos" type="number" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label for="months">Accounting period length (months)</label>
+          <input id="months" type="number" min="1" max="12" step="1" value="12">
+        </div>
+        <div class="switch">
+          <input id="ea" type="checkbox" checked>
+          <label for="ea">Employment Allowance available</label>
+        </div>
+      </div>
+      <div class="note">Ltd Co salary logic: EA on → salary £12,570. EA off → salary £9,100 to avoid employer NI. You can change these inside the code if you prefer a different policy.</div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Headline comparison</h2>
+      <div class="kpi">
+        <div>
+          <h3>Total tax — Self‑employed</h3>
+          <div class="val money" id="seTax">£0</div>
+        </div>
+        <div>
+          <h3>Total tax — Ltd Co</h3>
+          <div class="val money" id="coTax">£0</div>
+        </div>
+        <div>
+          <h3>Take‑home difference</h3>
+          <div class="val money" id="diff">£0</div>
+          <div class="tiny" id="whichBetter"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top: var(--gap);">
+    <div class="card">
+      <h3 style="margin-top:0">Self‑employed breakdown</h3>
+      <table>
+        <tbody id="seRows"></tbody>
+        <tfoot>
+          <tr><td><strong>Total tax</strong></td><td class="money danger" id="seTotalTax">£0</td></tr>
+          <tr><td><strong>Take‑home</strong></td><td class="money good" id="seTakeHome">£0</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Limited company breakdown</h3>
+      <table>
+        <tbody id="coRows"></tbody>
+        <tfoot>
+          <tr><td><strong>Total tax</strong></td><td class="money danger" id="coTotalTax">£0</td></tr>
+          <tr><td><strong>Take‑home</strong></td><td class="money good" id="coTakeHome">£0</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // ---- Constants for 2025/26 England/Wales
+  const PA = 12570;
+  const PA_TAPER_START = 100000;
+  const PA_TAPER_END = 125140;
+
+  const BASIC_BAND = 37700;     // basic rate band width
+  const HR_THRESHOLD = PA + BASIC_BAND; // 50,270 if full PA
+  const ADDITIONAL_THRESHOLD = 125140;
+
+  const IT_BASIC = 0.20;
+  const IT_HIGHER = 0.40;
+  const IT_ADDITIONAL = 0.45;
+
+  const DIV_ALLOWANCE = 500;
+  const DIV_BASIC = 0.0875;
+  const DIV_HIGHER = 0.3375;
+  const DIV_ADDITIONAL = 0.3935;
+
+  // Self-employed NIC
+  const C4_LPL = 12570;
+  const C4_UPL = 50270;
+  const C4_MAIN = 0.06;
+  const C4_UPPER = 0.02;
+  // Class 2 NI is treated as removed for most from 2024/25 onwards
+
+  // Employment and payroll NIC
+  const EMP_PRIMARY_PT = 12570;      // employee NI threshold (annual)
+  const EMP_UPPER_EARN = 50270;      // employee NI upper earnings limit
+  const EMP_NI_MAIN = 0.08;          // 8%
+  const EMP_NI_UPPER = 0.02;         // 2%
+
+  const ER_SECONDARY_ST = 9100;      // employer NI secondary threshold (annual, rounded)
+  const ER_NI = 0.138;               // 13.8%
+  const EMPLOYMENT_ALLOWANCE = 5000;
+
+  // Corporation tax bands
+  const CT_SMALL = 0.19;             // small profits rate
+  const CT_MAIN = 0.25;              // main rate
+  const CT_LOWER_LIMIT_ANNUAL = 50000;
+  const CT_UPPER_LIMIT_ANNUAL = 250000;
+
+  // Helpers
+  const £ = n => "£" + n.toLocaleString("en-GB", {maximumFractionDigits:0});
+
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  // Personal allowance after taper
+  function taperedPA(adjustedNetIncome){
+    if (adjustedNetIncome <= PA_TAPER_START) return PA;
+    if (adjustedNetIncome >= PA_TAPER_END) return 0;
+    const excess = adjustedNetIncome - PA_TAPER_START;
+    const reduction = Math.floor(excess / 2);
+    return Math.max(0, PA - reduction);
+  }
+
+  // Income tax on non-dividend income given taxable bands
+  function taxOnNSND(taxableNSND, bandBasePA){
+    // bandBasePA is the PA available to offset NSND before bands
+    let remaining = Math.max(0, taxableNSND - bandBasePA);
+
+    const basicSlice = Math.min(remaining, BASIC_BAND);
+    const hrSlice = Math.min(Math.max(remaining - BASIC_BAND, 0), ADDITIONAL_THRESHOLD - (PA + BASIC_BAND));
+    const addSlice = Math.max(remaining - BASIC_BAND - hrSlice, 0);
+
+    return basicSlice * IT_BASIC + hrSlice * IT_HIGHER + addSlice * IT_ADDITIONAL;
+  }
+
+  // Dividend tax given total dividends and how much of the bands are already used by NSND
+  function taxOnDividends(totalDivs, nsndTaxableAfterPA){
+    if (totalDivs <= 0) return 0;
+
+    let remainingDivs = totalDivs;
+
+    // Apply dividend allowance first
+    const divAllowUsed = Math.min(DIV_ALLOWANCE, remainingDivs);
+    remainingDivs -= divAllowUsed;
+
+    if (remainingDivs <= 0) return 0;
+
+    // Work out how much of the bands remain after NSND uses them
+    const nsndAfterPA = Math.max(0, nsndTaxableAfterPA); // already consumed by NSND
+    const basicBandLeft = Math.max(0, BASIC_BAND - nsndAfterPA);
+
+    const atBasic = Math.min(basicBandLeft, remainingDivs);
+    remainingDivs -= atBasic;
+
+    const hrBandLimit = Math.max(0, ADDITIONAL_THRESHOLD - (PA + BASIC_BAND)); // width of higher rate slice above basic until additional threshold
+    const nsndBeyondBasic = Math.max(0, nsndAfterPA - BASIC_BAND);
+    const hrBandLeft = Math.max(0, hrBandLimit - nsndBeyondBasic);
+
+    const atHigher = Math.min(hrBandLeft, remainingDivs);
+    remainingDivs -= atHigher;
+
+    const atAdditional = Math.max(0, remainingDivs);
+
+    return atBasic * DIV_BASIC + atHigher * DIV_HIGHER + atAdditional * DIV_ADDITIONAL;
+  }
+
+  // Class 4 NI on profits
+  function class4NI(profits){
+    const main = clamp(profits - C4_LPL, 0, C4_UPL - C4_LPL) * C4_MAIN;
+    const upper = Math.max(0, profits - C4_UPL) * C4_UPPER;
+    return main + upper;
+  }
+
+  // Employee NI on salary
+  function employeeNI(salary){
+    const main = clamp(salary - EMP_PRIMARY_PT, 0, EMP_UPPER_EARN - EMP_PRIMARY_PT) * EMP_NI_MAIN;
+    const upper = Math.max(0, salary - EMP_UPPER_EARN) * EMP_NI_UPPER;
+    return main + upper;
+  }
+
+  // Employer NI on salary (before EA)
+  function employerNI(salary){
+    return Math.max(0, salary - ER_SECONDARY_ST) * ER_NI;
+  }
+
+  // Corporation tax with marginal relief
+  function corporationTax(profits, assocCount, months){
+    const companies = Math.max(1, 1 + Number(assocCount||0)); // HMRC counts the company itself + associated
+    const period = clamp(Number(months||12), 1, 12);
+
+    const lower = CT_LOWER_LIMIT_ANNUAL / companies * (period/12);
+    const upper = CT_UPPER_LIMIT_ANNUAL / companies * (period/12);
+
+    if (profits <= 0) return { ct: 0, rate: 0, lower, upper };
+
+    if (profits <= lower) return { ct: profits * CT_SMALL, rate: CT_SMALL, lower, upper };
+    if (profits >= upper) return { ct: profits * CT_MAIN, rate: CT_MAIN, lower, upper };
+
+    // Marginal relief formula:
+    // CT = Profits*25% − MR, where MR = (Upper − Profits) × (MR fraction) × (Profits / Augmented Profits)
+    // MR fraction = 3/200 = 0.015 (for standard rules)
+    const MR_FRACTION = 3/200;
+    const augmented = profits; // approximation
+    const mainCharge = profits * CT_MAIN;
+    const MR = (upper - profits) * MR_FRACTION * (profits / augmented);
+    const ct = mainCharge - MR;
+    const effectiveRate = ct / profits;
+    return { ct, rate: effectiveRate, lower, upper };
+  }
+
+  // Format helpers for rows
+  function row(label, val){
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${label}</td><td class="money" style="text-align:right">${£(Math.round(val))}</td>`;
+    return tr;
+  }
+
+  function calc(){
+    const profits = Number(document.getElementById("profits").value || 0);
+    const otherEarned = Number(document.getElementById("otherEarned").value || 0);
+    const otherDivs = Number(document.getElementById("otherDivs").value || 0);
+    const assocCos = Number(document.getElementById("assocCos").value || 0);
+    const months = Number(document.getElementById("months").value || 12);
+    const eaOn = document.getElementById("ea").checked;
+
+    // ---------- SELF-EMPLOYED ----------
+    // Adjusted net income includes all income types before PA: profits + other earned + dividends
+    const seANI = profits + otherEarned + otherDivs;
+    const sePA = taperedPA(seANI);
+
+    const seNSND = profits + otherEarned;
+    const seNSNDtaxableAfterPA = Math.max(0, seNSND - sePA);
+
+    const seIT = taxOnNSND(seNSND, sePA);
+    const seDivTax = taxOnDividends(otherDivs, seNSNDtaxableAfterPA);
+    const seC4 = class4NI(profits);
+
+    const seTotalTax = seIT + seDivTax + seC4;
+    const seTakeHome = (profits + otherEarned + otherDivs) - seTotalTax;
+
+    // ---------- LIMITED COMPANY ----------
+    // Salary policy
+    const salary = eaOn ? 12570 : 9100;
+
+    // Employee NI and PAYE on salary
+    const coANI_base = salary + otherEarned + otherDivs; // ANI to taper PA
+    const coPA = taperedPA(coANI_base);
+    // PAYE on salary only (using nsnd function on salary with PA available)
+    const salaryTaxableAfterPA = Math.max(0, salary - coPA);
+    const paye = taxOnNSND(salary, coPA);
+
+    // Employer NI and EA
+    const erNIgross = employerNI(salary);
+    const eaCredit = Math.min(EMPLOYMENT_ALLOWANCE, erNIgross);
+    const erNI = Math.max(0, erNIgross - (eaOn ? eaCredit : 0));
+
+    // Company profits after salary and employer NI
+    const ctProfit = Math.max(0, profits - salary - erNI);
+    const { ct, rate: ctEffRate, lower: ctLower, upper: ctUpper } = corporationTax(ctProfit, assocCos, months);
+
+    const postCT = Math.max(0, ctProfit - ct);
+
+    // Dividends from company plus other dividends
+    const coDivsTotal = postCT + otherDivs;
+
+    // Work out how much of the bands are eaten by salary after PA
+    const bandsUsedByNSND = salaryTaxableAfterPA + Math.max(0, otherEarned - Math.max(0, coPA - salary)); // other earned also consumes bands after remaining PA
+    const coDivTax = taxOnDividends(coDivsTotal, bandsUsedByNSND);
+
+    const empNI = employeeNI(salary);
+
+    const coTotalTax = ct + paye + empNI + erNI + coDivTax;
+    const coTakeHome = salary - paye - empNI + (postCT) - coDivTax + otherEarned + otherDivs - 0; // otherEarned/otherDivs are already included gross, subtract their taxes via PAYE/divTax above
+
+    // ---------- RENDER ----------
+    document.getElementById("seTax").textContent = £(Math.round(seTotalTax));
+    document.getElementById("coTax").textContent = £(Math.round(coTotalTax));
+
+    const diff = coTakeHome - seTakeHome;
+    document.getElementById("diff").textContent = £(Math.round(Math.abs(diff)));
+    document.getElementById("whichBetter").textContent = diff >= 0 ? "Ltd Co take‑home higher" : "Self‑employed take‑home higher";
+
+    // Self‑employed table
+    const seRows = document.getElementById("seRows");
+    seRows.innerHTML = "";
+    seRows.appendChild(row("Personal allowance applied", sePA));
+    seRows.appendChild(row("Income tax on profits + other earned", seIT));
+    seRows.appendChild(row("Dividend tax on other dividends", seDivTax));
+    seRows.appendChild(row("Class 4 NI", seC4));
+
+    document.getElementById("seTotalTax").textContent = £(Math.round(seTotalTax));
+    document.getElementById("seTakeHome").textContent = £(Math.round(seTakeHome));
+
+    // Company table
+    const coRows = document.getElementById("coRows");
+    coRows.innerHTML = "";
+    coRows.appendChild(row("Assumed salary", salary));
+    coRows.appendChild(row("PAYE income tax on salary", paye));
+    coRows.appendChild(row("Employee NI on salary", empNI));
+    coRows.appendChild(row("Employer NI on salary (after EA)", erNI));
+    coRows.appendChild(row("CT profit (after salary and ER NI)", ctProfit));
+    coRows.appendChild(row("Corporation tax", ct));
+    coRows.appendChild(row("Post‑CT profit available for dividends", postCT));
+    coRows.appendChild(row("Dividend tax (incl other dividends)", coDivTax));
+    coRows.appendChild(row("CT effective rate", ctProfit > 0 ? (ctEffRate*100).toFixed(2) + "%" : "—"));
+    coRows.appendChild(row("CT small/main band limits (period‑adjusted)", 0)); // shown as note below
+
+    document.getElementById("coTotalTax").textContent = £(Math.round(coTotalTax));
+    document.getElementById("coTakeHome").textContent = £(Math.round(coTakeHome));
+
+    // Replace the CT limits row with a text note
+    coRows.lastChild.children[1].innerHTML = `<span class="tiny">Lower: ${£(Math.round(ctLower))}  |  Upper: ${£(Math.round(ctUpper))}</span>`;
+  }
+
+  // Wire inputs
+  ["profits","otherEarned","otherDivs","assocCos","months","ea"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", calc);
+    document.getElementById(id).addEventListener("change", calc);
+  });
+
+  calc();
+})();
+</script>
+</body>
+</html>
