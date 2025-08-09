@@ -4,404 +4,350 @@
 <meta charset="utf-8">
 <title>Self-Employed vs Limited Company — 2025/26 (England & Wales)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Modern system font stack with GOV.UK fallback -->
 <style>
-  :root{
-    /* GOV.UK palette (light UI) */
-    --gov-black:#0b0c0c;
-    --gov-blue:#1d70b8;
-    --gov-green:#00703c;
-    --gov-red:#d4351c;
-    --gov-yellow:#ffdd00;
-    --gov-bg:#f3f2f1;
-    --gov-panel:#ffffff;
-    --gov-border:#b1b4b6;
-    --muted:#6f777b;
-
-    /* UI spacing */
-    --radius:14px;
-    --gap:16px;
-    --pad:16px;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "GDS Transport", sans-serif;
-    color:var(--gov-black);
-    background:linear-gradient(180deg, var(--gov-bg), #fff 420px);
-    -webkit-font-smoothing:antialiased;
-    padding:24px;
-  }
-  h1{font-size:26px;margin:0 0 6px}
-  .hint{color:var(--muted);font-size:13px;margin:0 0 18px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
-  @media (max-width: 980px){.grid{grid-template-columns:1fr}}
-
-  .card{
-    background:var(--gov-panel);
-    border:1px solid var(--gov-border);
-    border-radius:var(--radius);
-    padding:var(--pad);
-    box-shadow:0 8px 20px rgba(11,12,12,0.04);
-  }
-  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
-  @media (max-width:720px){.inputs{grid-template-columns:1fr}}
-
-  label{display:block;font-size:13px;color:#3b3f42;margin:0 0 6px}
-  input,select{
-    width:100%;padding:12px 12px;border-radius:10px;border:1px solid var(--gov-border);
-    background:#fff;color:var(--gov-black);font-size:15px;outline:none;
-  }
-  input:focus{border-color:var(--gov-blue);box-shadow:0 0 0 3px rgba(29,112,184,.2)}
-  input[type="checkbox"]{width:auto;transform:translateY(1px)}
-  .inline{display:flex;align-items:center;gap:8px}
-
-  /* KPIs */
-  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:10px}
-  @media (max-width:720px){.kpi{grid-template-columns:1fr}}
-  .kpi > div{
-    background:#fff;border:1px solid var(--gov-border);border-radius:12px;padding:14px;text-align:center
-  }
-  .kpi small{color:var(--muted)}
-  .kpi .val{font-weight:800;font-size:24px;margin-top:6px}
-  .good{color:var(--gov-green)}
-  .bad{color:var(--gov-red)}
-
-  /* Tables (clean, modern) */
-  .table{width:100%;border-collapse:collapse;margin-top:6px}
-  .table th,.table td{padding:12px 8px;border-bottom:1px dashed var(--gov-border);font-size:14px}
-  .table th{color:#4f575c;text-align:left}
-  .mono{font-variant-numeric:tabular-nums}
-  .right{text-align:right}
-
-  /* Click-for-breakdown affordance */
-  .tax-figure{cursor:pointer}
-  .tax-figure:hover{text-decoration:underline}
-
-  /* Modal */
-  dialog{
-    width:min(560px,92vw);border:0;border-radius:14px;padding:0;box-shadow:0 18px 50px rgba(0,0,0,.25)
-  }
-  .modal-head{padding:16px 18px;border-bottom:1px solid var(--gov-border)}
-  .modal-body{padding:14px 18px;background:#fff}
-  .modal-foot{padding:12px 18px;border-top:1px solid var(--gov-border);display:flex;justify-content:flex-end}
-  .btn{
-    appearance:none;border:1px solid var(--gov-blue);background:var(--gov-blue);color:#fff;
-    border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer
-  }
-  .btn:hover{filter:brightness(0.95)}
+:root {
+  --gap: 14px;
+  --pad: 16px;
+  --radius: 8px;
+  --font: "GDS Transport", Arial, sans-serif;
+  --bg: #f3f2f1;
+  --card-bg: #ffffff;
+  --border: #b1b4b6;
+  --heading: #0b0c0c;
+  --text: #0b0c0c;
+  --muted: #505a5f;
+  --good: #00703c;
+  --danger: #d4351c;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  margin: 0;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+}
+h1 { font-size: 1.5rem; margin: 0 0 8px; }
+h2, h3 { color: var(--heading); margin-top: 0; }
+.hint { margin: 0 0 18px; color: var(--muted); font-size: 0.9rem; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--pad);
+}
+.inputs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
+input, select {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font: inherit;
+}
+.kpi {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  margin-top: 10px;
+}
+.kpi > div {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+.kpi h3 { margin: 0 0 6px; font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+.kpi .val { font-size: 1.2rem; font-weight: 700; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { padding: 6px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+th { text-align: left; color: var(--muted); font-weight: 600; }
+tfoot td { font-weight: 700; }
+.danger { color: var(--danger); }
+.good { color: var(--good); }
+.tiny { font-size: 0.75rem; color: var(--muted); }
+@media (max-width: 960px){
+  .grid { grid-template-columns: 1fr; }
+  .inputs { grid-template-columns: 1fr; }
+  .kpi { grid-template-columns: 1fr; }
+}
+/* Modal */
+#modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+#modalContent {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 400px;
+  width: 90%;
+}
+#modal h3 { margin-top: 0; }
+#modal table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+#modal td { padding: 4px 0; }
+#modalClose {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
-  <h1>Self-Employed vs Limited Company — 2025/26 (England & Wales)</h1>
-  <p class="hint">PA £12,570 with taper £100,000–£125,140. Income tax 20%/40%/45%. Dividend allowance £500; dividend tax 8.75%/33.75%/39.35. Class 4 NI 6% then 2%. Employee NI 8% then 2%. Employer NI 13.8% above secondary threshold. Employment Allowance £5,000. Planning tool only.</p>
+<h1>Self-Employed vs Limited Company — 2025/26 (England & Wales)</h1>
+<p class="hint">Planning tool — not advice. Uses 2025/26 tax rates.</p>
 
-  <div class="grid">
-    <div class="card">
-      <h2 style="margin:0 0 10px;font-size:18px">Inputs</h2>
-      <div class="inputs">
-        <div>
-          <label for="profits">Business profits (before drawings)</label>
-          <input id="profits" type="number" step="100" min="0" value="80000">
-        </div>
-        <div>
-          <label for="otherEarned">Other earned income (salary, rent, interest)</label>
-          <input id="otherEarned" type="number" step="100" min="0" value="0">
-        </div>
-        <div>
-          <label for="otherDivs">Other dividends (not from your company)</label>
-          <input id="otherDivs" type="number" step="100" min="0" value="0">
-        </div>
-        <div>
-          <label for="assocCos">Associated companies (for CT limits)</label>
-          <input id="assocCos" type="number" min="0" step="1" value="0">
-        </div>
-        <div>
-          <label for="months">Accounting period length (months)</label>
-          <input id="months" type="number" min="1" max="12" step="1" value="12">
-        </div>
-        <div class="inline" style="margin-top:2px">
-          <input id="ea" type="checkbox" checked>
-          <label for="ea" style="margin:0">Employment Allowance available</label>
-        </div>
+<div class="grid">
+  <div class="card">
+    <h2>Inputs</h2>
+    <div class="inputs">
+      <div>
+        <label for="profits">Business profits</label>
+        <input id="profits" type="number" value="80000">
       </div>
-      <p class="hint" style="margin-top:10px">Ltd Co salary policy: EA on → £12,570 salary; EA off → £9,100 to avoid employer NI.</p>
-    </div>
-
-    <div class="card">
-      <h2 style="margin:0 0 10px;font-size:18px">Headline comparison</h2>
-      <div class="kpi">
-        <div>
-          <small>Total tax — self-employed</small>
-          <div id="seTax" class="val mono tax-figure" data-kind="se-total">£0</div>
-        </div>
-        <div>
-          <small>Total tax — limited company</small>
-          <div id="coTax" class="val mono tax-figure" data-kind="co-total">£0</div>
-        </div>
-        <div>
-          <small>Take-home difference</small>
-          <div id="diff" class="val mono">£0</div>
-          <div id="whichBetter" class="hint" style="margin-top:6px"></div>
-        </div>
+      <div>
+        <label for="otherEarned">Other earned income</label>
+        <input id="otherEarned" type="number" value="0">
+      </div>
+      <div>
+        <label for="otherDivs">Other dividends</label>
+        <input id="otherDivs" type="number" value="0">
+      </div>
+      <div>
+        <label for="assocCos">Associated companies</label>
+        <input id="assocCos" type="number" value="0">
+      </div>
+      <div>
+        <label for="months">Months in accounting period</label>
+        <input id="months" type="number" value="12">
+      </div>
+      <div>
+        <input id="ea" type="checkbox" checked>
+        <label for="ea">Employment Allowance available</label>
       </div>
     </div>
   </div>
-
-  <div class="grid" style="margin-top:16px">
-    <div class="card">
-      <h3 style="margin:0 0 6px;font-size:16px">Self-employed breakdown</h3>
-      <table class="table">
-        <tbody id="seRows"></tbody>
-        <tfoot>
-          <tr><th>Total tax</th><td id="seTotalTax" class="right mono tax-figure" data-kind="se-total">£0</td></tr>
-          <tr><th>Take-home</th><td id="seTakeHome" class="right mono good">£0</td></tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <div class="card">
-      <h3 style="margin:0 0 6px;font-size:16px">Limited company breakdown</h3>
-      <table class="table">
-        <tbody id="coRows"></tbody>
-        <tfoot>
-          <tr><th>Total tax</th><td id="coTotalTax" class="right mono tax-figure" data-kind="co-total">£0</td></tr>
-          <tr><th>Take-home</th><td id="coTakeHome" class="right mono good">£0</td></tr>
-        </tfoot>
-      </table>
+  <div class="card">
+    <h2>Headline comparison</h2>
+    <div class="kpi">
+      <div id="kpiSeTax"><h3>Total tax - Self-employed</h3><div class="val" id="seTax">£0</div></div>
+      <div id="kpiCoTax"><h3>Total tax - Ltd Co</h3><div class="val" id="coTax">£0</div></div>
+      <div><h3>Take-home difference</h3><div class="val" id="diff">£0</div><div class="tiny" id="whichBetter"></div></div>
     </div>
   </div>
+</div>
+<div class="grid" style="margin-top:14px;">
+  <div class="card">
+    <h3>Self-employed breakdown</h3>
+    <table><tbody id="seRows"></tbody>
+    <tfoot><tr><td>Total tax</td><td class="danger" id="seTotalTax">£0</td></tr><tr><td>Take-home</td><td class="good" id="seTakeHome">£0</td></tr></tfoot>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Limited company breakdown</h3>
+    <table><tbody id="coRows"></tbody>
+    <tfoot><tr><td>Total tax</td><td class="danger" id="coTotalTax">£0</td></tr><tr><td>Take-home</td><td class="good" id="coTakeHome">£0</td></tr></tfoot>
+    </table>
+  </div>
+</div>
 
-  <!-- Modal -->
-  <dialog id="dlg">
-    <div class="modal-head"><h3 id="dlgTitle" style="margin:0;font-size:18px">Tax breakdown</h3></div>
-    <div class="modal-body">
-      <table class="table">
-        <thead><tr><th>Item</th><th class="right">Amount</th></tr></thead>
-        <tbody id="dlgBody"></tbody>
-        <tfoot><tr><th>Total</th><td id="dlgTotal" class="right mono">£0</td></tr></tfoot>
-      </table>
-      <p id="dlgNote" class="hint" style="margin-top:8px"></p>
-    </div>
-    <div class="modal-foot"><button class="btn" id="dlgClose">Close</button></div>
-  </dialog>
+<!-- Modal -->
+<div id="modal"><div id="modalContent">
+  <h3 id="modalTitle"></h3>
+  <table id="modalTable"></table>
+  <button id="modalClose">Close</button>
+</div></div>
 
 <script>
-(function(){
-  // ----- 2025/26 constants
-  const PA=12570, PA_TAPER_START=100000, PA_TAPER_END=125140;
-  const BASIC_BAND=37700, ADDITIONAL_THRESHOLD=125140;
-  const IT_BASIC=.20, IT_HIGHER=.40, IT_ADD=.45;
-  const DIV_ALLOW=500, DIV_BASIC=.0875, DIV_HIGHER=.3375, DIV_ADD=.3935;
-  const C4_LPL=12570, C4_UPL=50270, C4_MAIN=.06, C4_UPPER=.02;
-  const EMP_PT=12570, EMP_UEL=50270, EE_MAIN=.08, EE_ADD=.02;
-  const ER_ST=9100, ER_RATE=.138, EA_CAP=5000;
-  const CT_SMALL=.19, CT_MAIN=.25, CT_LOWER=50000, CT_UPPER=250000;
+function fmtGBP(n){ return "£" + Math.round(n).toLocaleString("en-GB"); }
 
-  // utils
-  const fmt = n=>"£"+Number(n).toLocaleString("en-GB",{maximumFractionDigits:0});
-  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+let breakdowns = {};
+
+function calc(){
+  breakdowns = {};
+  const profits = +document.getElementById('profits').value;
+  const otherEarned = +document.getElementById('otherEarned').value;
+  const otherDivs = +document.getElementById('otherDivs').value;
+  const assocCos = +document.getElementById('assocCos').value;
+  const months = +document.getElementById('months').value;
+  const eaAvailable = document.getElementById('ea').checked;
+
+  const PA = 12570, BASIC_BAND = 37700, ADDITIONAL_THRESHOLD = 125140;
+  const IT_BASIC = 0.20, IT_HIGHER = 0.40, IT_ADD = 0.45;
+  const DIV_ALLOW = 500, DIV_BASIC = 0.0875, DIV_HIGHER = 0.3375, DIV_ADD = 0.3935;
+  const C4_LPL = 12570, C4_UPL = 50270, C4_MAIN = 0.06, C4_ADD = 0.02;
+  const EE_MAIN = 0.08, EE_ADD = 0.02, ER_ST = 9100, ER_RATE = 0.138, EA_CAP = 5000;
+  const CT_SMALL = 0.19, CT_MAIN = 0.25, CT_LOWER = 50000, CT_UPPER = 250000;
+
+  function addBreakdown(key,title,steps){
+    breakdowns[key] = {title, steps};
+  }
 
   function taperedPA(ani){
-    if(ani<=PA_TAPER_START) return PA;
-    if(ani>=PA_TAPER_END) return 0;
-    return Math.max(0, PA - Math.floor((ani-PA_TAPER_START)/2));
-  }
-  function taxOnNSND(total, paAvail){
-    let rem=Math.max(0,total-paAvail);
-    const b=Math.min(rem,BASIC_BAND);
-    const h=Math.min(Math.max(rem-BASIC_BAND,0), ADDITIONAL_THRESHOLD-(PA+BASIC_BAND));
-    const a=Math.max(0, rem-BASIC_BAND-h);
-    return b*IT_BASIC + h*IT_HIGHER + a*IT_ADD;
-  }
-  function taxOnDivs(totalDivs, nsndAfterPA){
-    if(totalDivs<=0) return 0;
-    let left=totalDivs;
-
-    const allow=Math.min(DIV_ALLOW,left); left-=allow;
-    if(left<=0) return 0;
-
-    const basicLeft=Math.max(0, BASIC_BAND - Math.max(0,nsndAfterPA));
-    const atBasic=Math.min(basicLeft,left); left-=atBasic;
-
-    const hrWidth=Math.max(0, ADDITIONAL_THRESHOLD-(PA+BASIC_BAND));
-    const nsndBeyondBasic=Math.max(0, nsndAfterPA-BASIC_BAND);
-    const hrLeft=Math.max(0, hrWidth-nsndBeyondBasic);
-    const atHigher=Math.min(hrLeft,left); left-=atHigher;
-
-    const atAdd=Math.max(0,left);
-    return atBasic*DIV_BASIC + atHigher*DIV_HIGHER + atAdd*DIV_ADD;
-  }
-  const class4NI=p=>{
-    const main=clamp(p-C4_LPL,0,C4_UPL-C4_LPL)*C4_MAIN;
-    const upper=Math.max(0,p-C4_UPL)*C4_UPPER;
-    return main+upper;
-  };
-  const eeNI=s=>{
-    const main=clamp(s-EMP_PT,0,EMP_UEL-EMP_PT)*EE_MAIN;
-    const upper=Math.max(0,s-EMP_UEL)*EE_ADD;
-    return main+upper;
-  };
-  const erNI=s=>Math.max(0,s-ER_ST)*ER_RATE;
-
-  function corpTax(profits, assoc, months){
-    const cos=Math.max(1,1+Number(assoc||0));
-    const period=clamp(Number(months||12),1,12);
-    const lower=CT_LOWER/cos*(period/12), upper=CT_UPPER/cos*(period/12);
-    if(profits<=0) return {ct:0,lower,upper};
-    if(profits<=lower) return {ct:profits*CT_SMALL,lower,upper};
-    if(profits>=upper) return {ct:profits*CT_MAIN,lower,upper};
-    const MR_FRACTION=3/200;
-    const mainCharge=profits*CT_MAIN;
-    const MR=(upper-profits)*MR_FRACTION;
-    return {ct:mainCharge-MR,lower,upper};
+    if (ani <= 100000) return PA;
+    if (ani >= 125140) return 0;
+    return Math.max(0, PA - Math.floor((ani - 100000)/2));
   }
 
-  // state for dialog
-  const S={se:{}, co:{}};
-
-  function row(label,val,kind){
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<th>${label}</th>
-      <td class="right mono ${kind?'tax-figure':''}" ${kind?`data-kind="${kind}"`:''}>${fmt(Math.round(val))}</td>`;
-    return tr;
+  function taxOnNSND(total, paAvail, key, title){
+    let rem = Math.max(0,total - paAvail);
+    let steps = [];
+    let b = Math.min(rem, BASIC_BAND);
+    if (b>0) steps.push([b, IT_BASIC, b*IT_BASIC]);
+    let h = Math.min(Math.max(rem - BASIC_BAND,0), ADDITIONAL_THRESHOLD - (PA+BASIC_BAND));
+    if (h>0) steps.push([h, IT_HIGHER, h*IT_HIGHER]);
+    let a = Math.max(0, rem - BASIC_BAND - h);
+    if (a>0) steps.push([a, IT_ADD, a*IT_ADD]);
+    let totalTax = steps.reduce((s,x)=>s+x[2],0);
+    addBreakdown(key,title,steps);
+    return totalTax;
   }
 
-  function calc(){
-    const profits=+document.getElementById("profits").value||0;
-    const otherEarned=+document.getElementById("otherEarned").value||0;
-    const otherDivs=+document.getElementById("otherDivs").value||0;
-    const assoc=+document.getElementById("assocCos").value||0;
-    const months=+document.getElementById("months").value||12;
-    const ea=document.getElementById("ea").checked;
-
-    // Sole trader
-    const seANI=profits+otherEarned+otherDivs;
-    const sePA=taperedPA(seANI);
-    const seNSND=profits+otherEarned;
-    const seAfterPA=Math.max(0,seNSND-sePA);
-    const seIT=taxOnNSND(seNSND,sePA);
-    const seDivTax=taxOnDivs(otherDivs,seAfterPA);
-    const seC4=class4NI(profits);
-    const seTotal=seIT+seDivTax+seC4;
-    const seTake=(profits+otherEarned+otherDivs)-seTotal;
-
-    // Company
-    const salary = ea ? 12570 : 9100;
-    const coANI=salary+otherEarned+otherDivs;
-    const coPA=taperedPA(coANI);
-    const salaryAfterPA=Math.max(0,salary-coPA);
-    const paye=taxOnNSND(salary,coPA);
-
-    const erGross=erNI(salary);
-    const eaCredit=Math.min(EA_CAP, erGross);
-    const er= Math.max(0, erGross - (ea?eaCredit:0));
-
-    const ctProf=Math.max(0, profits - salary - er);
-    const {ct,lower:ctLower,upper:ctUpper}=corpTax(ctProf,assoc,months);
-    const postCT=Math.max(0, ctProf-ct);
-
-    const divsTotal=postCT+otherDivs;
-    const bandsUsed = salaryAfterPA + Math.max(0, otherEarned - Math.max(0, coPA - salary));
-    const divTax=taxOnDivs(divsTotal, bandsUsed);
-    const ee=eeNI(salary);
-
-    const coTotal=ct+paye+ee+er+divTax;
-    const coTake=salary - paye - ee + postCT - divTax + otherEarned + otherDivs;
-
-    // Headline
-    document.getElementById("seTax").textContent=fmt(Math.round(seTotal));
-    document.getElementById("coTax").textContent=fmt(Math.round(coTotal));
-    const diff=coTake-seTake;
-    document.getElementById("diff").textContent=fmt(Math.round(Math.abs(diff)));
-    document.getElementById("whichBetter").textContent = diff>=0 ? "Limited company take-home higher" : "Self-employed take-home higher";
-
-    // Tables
-    const seRows=document.getElementById("seRows"); seRows.innerHTML="";
-    seRows.appendChild(row("Personal allowance applied", sePA));
-    seRows.appendChild(row("Income tax on profits + other earned", seIT, "se-it"));
-    seRows.appendChild(row("Dividend tax on other dividends", seDivTax, "se-div"));
-    seRows.appendChild(row("Class 4 National Insurance", seC4, "se-ni"));
-    document.getElementById("seTotalTax").textContent=fmt(Math.round(seTotal));
-    document.getElementById("seTakeHome").textContent=fmt(Math.round(seTake));
-
-    const coRows=document.getElementById("coRows"); coRows.innerHTML="";
-    coRows.appendChild(row("Assumed director salary", salary));
-    coRows.appendChild(row("PAYE income tax on salary", paye, "co-paye"));
-    coRows.appendChild(row("Employee NI on salary", ee, "co-ee"));
-    coRows.appendChild(row("Employer NI on salary (after EA)", er, "co-er"));
-    coRows.appendChild(row("CT profit (after salary & ER NI)", ctProf));
-    coRows.appendChild(row("Corporation tax", ct, "co-ct"));
-    coRows.appendChild(row("Post-CT profit available for dividends", postCT));
-    coRows.appendChild(row("Dividend tax (incl. other dividends)", divTax, "co-div"));
-    const limits=document.createElement("tr");
-    limits.innerHTML=`<th>CT limits (period adjusted)</th><td class="right mono hint">Lower: ${fmt(Math.round(ctLower))} | Upper: ${fmt(Math.round(ctUpper))}</td>`;
-    coRows.appendChild(limits);
-    document.getElementById("coTotalTax").textContent=fmt(Math.round(coTotal));
-    document.getElementById("coTakeHome").textContent=fmt(Math.round(coTake));
-
-    // store for dialog
-    S.se={seIT,seDivTax,seC4,seTotal};
-    S.co={paye: paye, ee: ee, er: er, ct: ct, divTax: divTax, coTotal: coTotal};
+  function taxOnDivs(totalDivs, nsndAfterPA, key, title){
+    if (totalDivs <= 0) { addBreakdown(key,title,[]); return 0; }
+    let steps=[];
+    let left = totalDivs;
+    let allow = Math.min(DIV_ALLOW,left);
+    left -= allow;
+    if (left <= 0){ addBreakdown(key,title,steps); return 0; }
+    let basicLeft = Math.max(0, BASIC_BAND - Math.max(0, nsndAfterPA));
+    let atBasic = Math.min(basicLeft,left);
+    if (atBasic>0) steps.push([atBasic,DIV_BASIC, atBasic*DIV_BASIC]);
+    left -= atBasic;
+    let hrWidth = Math.max(0, ADDITIONAL_THRESHOLD - (PA + BASIC_BAND));
+    let nsndBeyondBasic = Math.max(0, nsndAfterPA - BASIC_BAND);
+    let hrLeft = Math.max(0, hrWidth - nsndBeyondBasic);
+    let atHigher = Math.min(hrLeft, left);
+    if (atHigher>0) steps.push([atHigher,DIV_HIGHER, atHigher*DIV_HIGHER]);
+    left -= atHigher;
+    let atAdd = Math.max(0,left);
+    if (atAdd>0) steps.push([atAdd,DIV_ADD, atAdd*DIV_ADD]);
+    let totalTax = steps.reduce((s,x)=>s+x[2],0);
+    addBreakdown(key,title,steps);
+    return totalTax;
   }
 
-  // Modal
-  const dlg=document.getElementById("dlg");
-  const dlgTitle=document.getElementById("dlgTitle");
-  const dlgBody=document.getElementById("dlgBody");
-  const dlgTotal=document.getElementById("dlgTotal");
-  const dlgNote=document.getElementById("dlgNote");
-  document.getElementById("dlgClose").addEventListener("click",()=>dlg.close());
+  function class4NI(profits, key){
+    let steps=[];
+    let main = Math.min(Math.max(profits - C4_LPL, 0), C4_UPL - C4_LPL);
+    if (main>0) steps.push([main,C4_MAIN, main*C4_MAIN]);
+    let upper = Math.max(0, profits - C4_UPL);
+    if (upper>0) steps.push([upper,C4_ADD, upper*C4_ADD]);
+    let total = steps.reduce((s,x)=>s+x[2],0);
+    addBreakdown(key,"Class 4 NI",steps);
+    return total;
+  }
 
-  function openBreakdown(kind){
-    dlgBody.innerHTML=""; dlgNote.textContent="";
-    let rows=[], title="Tax breakdown", total=0;
+  function eeNI(salary,key){
+    let steps=[];
+    let main = Math.min(Math.max(salary - PA,0), 50270 - PA);
+    if (main>0) steps.push([main,EE_MAIN, main*EE_MAIN]);
+    let upper = Math.max(0, salary - 50270);
+    if (upper>0) steps.push([upper,EE_ADD, upper*EE_ADD]);
+    let total = steps.reduce((s,x)=>s+x[2],0);
+    addBreakdown(key,"Employee NI",steps);
+    return total;
+  }
 
-    if(kind==="se-total"){ title="Self-employed — total tax";
-      rows=[["Income tax",S.se.seIT],["Dividend tax",S.se.seDivTax],["Class 4 NI",S.se.seC4]];
-      total=S.se.seTotal;
-      dlgNote.textContent="Income tax uses 20/40/45% bands after personal allowance and taper. Class 4 NI is 6% to the upper profits limit, then 2%.";
+  function erNI(salary,key){
+    let steps=[];
+    let above = Math.max(0,salary - ER_ST);
+    if (above>0) steps.push([above,ER_RATE, above*ER_RATE]);
+    let total = steps.reduce((s,x)=>s+x[2],0);
+    addBreakdown(key,"Employer NI",steps);
+    return total;
+  }
+
+  function corpTax(profits, key){
+    let steps=[];
+    const lower=CT_LOWER, upper=CT_UPPER;
+    if (profits<=0){ addBreakdown(key,"Corporation Tax",[]); return 0; }
+    if (profits <= lower){ steps.push([profits, CT_SMALL, profits*CT_SMALL]); }
+    else if (profits >= upper){ steps.push([profits, CT_MAIN, profits*CT_MAIN]); }
+    else {
+      const mainCharge = profits * CT_MAIN;
+      const MR = (upper - profits) * (3/200);
+      steps.push([profits, CT_MAIN, mainCharge]);
+      steps.push(["Marginal Relief",-1, -MR]);
     }
-    if(kind==="co-total"){ title="Limited company — total tax";
-      rows=[["PAYE on salary",S.co.paye],["Employee NI",S.co.ee],["Employer NI",S.co.er],["Corporation tax",S.co.ct],["Dividend tax",S.co.divTax]];
-      total=S.co.coTotal;
-      dlgNote.textContent="Employer NI is included to show the full burden. Corporation tax uses small/main rates with marginal relief between adjusted limits.";
-    }
-    if(kind==="se-it"){ title="Self-employed — income tax"; rows=[["Income tax",S.se.seIT]]; total=S.se.seIT; }
-    if(kind==="se-div"){ title="Self-employed — dividend tax"; rows=[["Dividend tax",S.se.seDivTax]]; total=S.se.seDivTax; dlgNote.textContent="First £500 of dividends are taxed at 0% but still consume bands."; }
-    if(kind==="se-ni"){ title="Self-employed — Class 4 NI"; rows=[["Class 4 NI",S.se.seC4]]; total=S.se.seC4; }
+    let total = steps.reduce((s,x)=>s+(typeof x[2]==="number"?x[2]:0),0);
+    addBreakdown(key,"Corporation Tax",steps);
+    return total;
+  }
 
-    if(kind==="co-paye"){ title="Limited company — PAYE"; rows=[["PAYE on salary",S.co.paye]]; total=S.co.paye; }
-    if(kind==="co-ee"){ title="Limited company — employee NI"; rows=[["Employee NI",S.co.ee]]; total=S.co.ee; }
-    if(kind==="co-er"){ title="Limited company — employer NI"; rows=[["Employer NI (after EA)",S.co.er]]; total=S.co.er; }
-    if(kind==="co-ct"){ title="Limited company — corporation tax"; rows=[["Corporation tax",S.co.ct]]; total=S.co.ct; }
-    if(kind==="co-div"){ title="Limited company — dividend tax"; rows=[["Dividend tax",S.co.divTax]]; total=S.co.divTax; dlgNote.textContent="First £500 of dividends are taxed at 0% but still consume bands."; }
+  // Self-employed
+  let seANI = profits + otherEarned;
+  let sePA = taperedPA(seANI);
+  let seIncomeTax = taxOnNSND(seANI, sePA, "seIncomeTax", "Self-employed Income Tax");
+  let seC4 = class4NI(profits, "seC4");
+  let seTotal = seIncomeTax + seC4;
+  let seTake = profits + otherEarned - seTotal;
 
-    rows.forEach(([k,v])=>{
-      const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${k}</td><td class="right mono">${fmt(Math.round(v))}</td>`;
-      dlgBody.appendChild(tr);
+  // Ltd Co (salary fixed at £12,570)
+  const salary = 12570;
+  let erBill = erNI(salary,"erNI");
+  let erAfterEA = Math.max(0, erBill - (eaAvailable ? EA_CAP : 0));
+  let ctProfit = profits - salary - erAfterEA;
+  let ctBill = corpTax(ctProfit,"ct");
+  let postCT = ctProfit - ctBill;
+  let payeBill = taxOnNSND(salary + otherEarned, taperedPA(salary+otherEarned), "paye","PAYE");
+  let eeBill = eeNI(salary,"eeNI");
+  let divTaxBill = taxOnDivs(postCT + otherDivs, Math.max(0,salary+otherEarned - taperedPA(salary+otherEarned)), "divTax", "Dividend Tax");
+  let coTotal = erBill + ctBill + payeBill + eeBill + divTaxBill;
+  let coTake = salary - payeBill - eeBill + postCT - divTaxBill + otherEarned + otherDivs;
+
+  // Update UI
+  document.getElementById("seTax").textContent = fmtGBP(seTotal);
+  document.getElementById("coTax").textContent = fmtGBP(coTotal);
+  document.getElementById("diff").textContent = fmtGBP(coTake - seTake);
+  document.getElementById("whichBetter").textContent = coTake>seTake?"Ltd Co better":"Self-employed better";
+  document.getElementById("seTotalTax").textContent = fmtGBP(seTotal);
+  document.getElementById("seTakeHome").textContent = fmtGBP(seTake);
+  document.getElementById("coTotalTax").textContent = fmtGBP(coTotal);
+  document.getElementById("coTakeHome").textContent = fmtGBP(coTake);
+
+  // Fill breakdown tables
+  document.getElementById("seRows").innerHTML = `
+    <tr><td>Income Tax</td><td class="danger clickable" data-key="seIncomeTax">${fmtGBP(seIncomeTax)}</td></tr>
+    <tr><td>Class 4 NI</td><td class="danger clickable" data-key="seC4">${fmtGBP(seC4)}</td></tr>`;
+  document.getElementById("coRows").innerHTML = `
+    <tr><td>Employer NI</td><td class="danger clickable" data-key="erNI">${fmtGBP(erBill)}</td></tr>
+    <tr><td>Corporation Tax</td><td class="danger clickable" data-key="ct">${fmtGBP(ctBill)}</td></tr>
+    <tr><td>PAYE</td><td class="danger clickable" data-key="paye">${fmtGBP(payeBill)}</td></tr>
+    <tr><td>Employee NI</td><td class="danger clickable" data-key="eeNI">${fmtGBP(eeBill)}</td></tr>
+    <tr><td>Dividend Tax</td><td class="danger clickable" data-key="divTax">${fmtGBP(divTaxBill)}</td></tr>`;
+}
+
+document.addEventListener("input",calc);
+document.addEventListener("DOMContentLoaded",calc);
+
+// Modal
+document.addEventListener("click",function(e){
+  if (e.target.classList.contains("clickable")){
+    let key = e.target.dataset.key;
+    let data = breakdowns[key];
+    let tbl = document.getElementById("modalTable");
+    let html="";
+    data.steps.forEach(s=>{
+      if (s[1]===-1){ html += `<tr><td>${s[0]}</td><td></td><td>${fmtGBP(s[2])}</td></tr>`; }
+      else { html += `<tr><td>${fmtGBP(s[0])}</td><td>${(s[1]*100).toFixed(0)}%</td><td>${fmtGBP(s[2])}</td></tr>`; }
     });
-    dlgTitle.textContent=title;
-    dlgTotal.textContent=fmt(Math.round(total));
-    dlg.showModal();
+    html += `<tr><td colspan="2"><strong>Total</strong></td><td><strong>${fmtGBP(data.steps.reduce((sum,s)=>sum+(typeof s[2]==="number"?s[2]:0),0))}</strong></td></tr>`;
+    tbl.innerHTML = html;
+    document.getElementById("modalTitle").textContent = data.title;
+    document.getElementById("modal").style.display = "flex";
   }
-
-  document.addEventListener("click",e=>{
-    const el=e.target.closest(".tax-figure");
-    if(el && el.dataset.kind) openBreakdown(el.dataset.kind);
-  });
-
-  ["profits","otherEarned","otherDivs","assocCos","months","ea"].forEach(id=>{
-    const el=document.getElementById(id);
-    el.addEventListener("input",calc);
-    el.addEventListener("change",calc);
-  });
-
-  document.addEventListener("DOMContentLoaded",calc);
-  calc();
-})();
+});
+document.getElementById("modalClose").addEventListener("click",()=>document.getElementById("modal").style.display="none");
 </script>
 </body>
 </html>
